@@ -2,10 +2,6 @@ const testAuth = (z, bundle) => {
   const promise = z.request({
     method: 'GET',
     url: `${bundle.authData.server_address}/fmi/admin/api/v1/server/status`,
-    // headers: {
-    //   'Content-Type': 'application/json',
-    //   'Authorization': `Bearer ${bundle.authData.sessionKey}`
-    // }
   });
 
   return promise.then((response) => {
@@ -14,7 +10,6 @@ const testAuth = (z, bundle) => {
     }
     return response;
   });
-
 };
 
 const getSessionKey = (z, bundle) => {
@@ -58,5 +53,7 @@ module.exports = {
 
   sessionConfig: {
     perform: getSessionKey
-  }
+  },
+
+  connectionLabel: (z, bundle) => { bundle.authData.username },
 };
