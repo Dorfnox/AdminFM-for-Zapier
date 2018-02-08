@@ -1,53 +1,50 @@
-const getServerStatus = (z, bundle) => {
+// Database Server - Get the status of the server (online or offline)
 
+const getServerStatus = (z, bundle) => {
   const options = {
     url: `${bundle.authData.server_address}/fmi/admin/api/v1/server/status`
   };
-
   return z.request(options)
     .then((response) => JSON.parse(response.content));
 };
 
-// const getServerStatus = (z, bundle) => {
-//   // bundle.cleanedRequest will include the parsed JSON object (if it's not a
-//   // test poll) and also a .querystring property with the URL's query string.
-//   const recipe = {
-//     id: bundle.cleanedRequest.id,
-//     result: bundle.cleanedRequest.result,
-//     running: bundle.cleanedRequest.running,
-//   };
-//
-//   return [recipe];
-// };
-
-module.exports = {
+const options = {
   key: 'getServerStatus',
-
-  noun: 'Server Status!!!!!',
-
-  display: {
-    label: 'Get Server Status!!!!!',
-    description: 'Trigger for getting the status of your filemaker server' },
-
+  noun: 'Server Status',
   operation: {
     inputFields: [
-      {key: 'style', type: 'text',  helpText: 'testing where this shows up'} ],
-
-    // type: 'hook',
-
+      {key: 'Empty', type: 'text',  helpText: 'Testing where this shows up'} ],
     perform: getServerStatus,
-    // performList: getServerStatusLive,
-    // performSubscribe: getServerStatus,
-    // performUnsubscribe: getServerStatus,
-
     sample: {
       id: 1,
       result: 0,
       running: 'true' },
-
     outputFields: [
       {key: 'id', label: 'ID'},
       {key: 'result', label: 'Filemaker Result'},
-      {key: 'running', label: 'Running'} ]
+      {key: 'running', label: 'Running'} ],
     }
+};
+
+const getServerStatusTrigger = {
+  key: options.key,
+  noun: options.noun,
+  display: {
+    label: 'Poll for Server Status Changes',
+    description: 'Triggers when the status of your server changes' },
+  operation: options.operation,
+}
+
+const getServerStatusSearch = {
+  key: options.key,
+  noun: options.noun,
+  display: {
+    label: 'Request the Status of Your Server',
+    description: 'Returns the status of your server' },
+  operation: options.operation,
+}
+
+module.exports = {
+  trigger: getServerStatusTrigger,
+  search: getServerStatusSearch,
 };

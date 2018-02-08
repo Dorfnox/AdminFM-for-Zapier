@@ -1,5 +1,4 @@
 const authentication = require('./authentication');
-// const RepositoryResource = require('./resources/repository');
 
 // Filemaker API integrations are stored in ./resources
 const ServerStatus = require('./resources/database_server_get_server_status');
@@ -29,16 +28,6 @@ const sessionRefreshIf401 = (response, z, bundle) => {
   return response;
 };
 
-const getServerStatus = (z, bundle) => {
-
-  const requestOptions = {
-    url: `${bundle.authData.server_address}/fmi/admin/api/v1/server/status`
-  };
-
-  return z.request(requestOptions)
-    .then((response) => JSON.parse(response.content));
-};
-
 const App = {
   version: require('./package.json').version,
   platformVersion: require('zapier-platform-core').version,
@@ -54,36 +43,22 @@ const App = {
   ],
 
   resources: {
-    //[RepositoryResource.key]: RepositoryResource,
   },
 
+  // Requests for information from the server
   searches: {
+    [ServerStatus.search.key]: ServerStatus.search,
   },
 
+  // Will be polled for changes, any changes to these activate the 'trigger'
   triggers: {
-    [ServerStatus.key]: ServerStatus,
+    [ServerStatus.trigger.key]: ServerStatus.trigger,
     [ServerConfiguration.key]: ServerConfiguration,
   },
 
-  // triggers: {
-  //   getServerStatus: {
-  //     noun: 'Server Status',
-  //     key: 'getServerStatus',
-  //     display: {
-  //       label: 'Get Server Status',
-  //       description: 'Get the status of the server'
-  //     },
-  //     operation: {
-  //       perform: getServerStatus
-  //     },
-  //   },
-  // },
-
-  // If you want your creates to show up, you better include it here!
+  //
   creates: {
-    getServerStatus: ServerStatus,
   }
 }
 
-// Finally, export the app.
 module.exports = App;
