@@ -1,7 +1,9 @@
 const authentication = require('./authentication');
-const RepositoryResource = require('./resources/repository');
-const ServerStatus = require('./database_server_get_server_status');
-const ServerConfiguration = require('./database_server_get_server_configuration');
+// const RepositoryResource = require('./resources/repository');
+
+// Filemaker API integrations are stored in ./resources
+const ServerStatus = require('./resources/database_server_get_server_status');
+const ServerConfiguration = require('./resources/database_server_get_server_configuration');
 
 // JUST FOR TESTING
 // THIS MUST CHANGE IT IS HIGHLY UNSERCURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
