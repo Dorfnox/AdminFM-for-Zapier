@@ -17,11 +17,11 @@ const options = {
     perform: getServerConfiguration,
     sample: {
       id: 1,
-      "result": 0,
-      "cacheSize": 100,
-      "maxFiles": 100,
-      "maxProConnections": 100,
-      "maxPSOS": 100
+      result: 0,
+      cacheSize: 100,
+      maxFiles: 100,
+      maxProConnections: 100,
+      maxPSOS: 100
     },
     outputFields: [
       {key: 'id', label: 'ID'},
@@ -51,7 +51,7 @@ const getServerConfigurationSearch = {
   noun: options.noun,
   display: {
     label: 'Request the Configuration of Your Server',
-    description: 'Returns the Configuration of your server', },
+    description: 'Returns the configuration of your server', },
   operation: {
     perform: options.operation.perform,
     inputFields: options.operation.inputFields,

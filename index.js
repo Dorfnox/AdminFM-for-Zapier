@@ -3,6 +3,7 @@ const authentication = require('./authentication');
 // Filemaker API integrations are stored in ./resources
 const ServerStatus = require('./resources/database_server_get_server_status');
 const ServerConfiguration = require('./resources/database_server_get_server_configuration');
+const ServerSecurityConfiguration = require('./resources/database_server_get_server_security_configuration');
 
 // JUST FOR TESTING
 // THIS MUST CHANGE IT IS HIGHLY UNSERCURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -15,7 +16,7 @@ const includeSessionKeyHeader = (request, z, bundle) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${bundle.authData.sessionKey}`
     };
-  }
+  };
   return request;
 };
 
@@ -49,12 +50,14 @@ const App = {
   searches: {
     [ServerStatus.search.key]: ServerStatus.search,
     [ServerConfiguration.search.key]: ServerConfiguration.search,
+    [ServerSecurityConfiguration.search.key]: ServerSecurityConfiguration.search,
   },
 
   // Will be polled for changes every 15 minutes; any changes to these activate the 'trigger'
   triggers: {
     [ServerStatus.trigger.key]: ServerStatus.trigger,
     [ServerConfiguration.trigger.key]: ServerConfiguration.trigger,
+    [ServerSecurityConfiguration.trigger.key]: ServerSecurityConfiguration.trigger,
   },
 
   //
