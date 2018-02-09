@@ -9,12 +9,30 @@ const getServerConfiguration = (z, bundle) => {
 };
 
 
+// Database Server - Set (update) the Configuration of the server
+const setServerConfiguration = (z, bundle) => {
+  const options = {
+    url: `${bundle.authData.server_address}/fmi/admin/api/v1/server/config/general`,
+    method: 'PATCH',
+  };
+  return z.request(options)
+    .then((response) => JSON.parse(response.content));
+};
+
+
 // options to be used in below definitions
 const options = {
-  key: 'getServerConfiguration',
+  key: 'ServerConfiguration',
   noun: 'Server Configuration',
   operation: {
-    perform: getServerConfiguration,
+    poll: getServerConfiguration,
+    get: getServerConfiguration,
+    set: setServerConfiguration,
+    inputFields: [
+      {key: 'cacheSize', label: 'Cache Size', type: 'integer', required: false, helpText: 'Set a new cache size (RAM). Must be an integer of at least 64 MB'},
+      {key: 'maxFiles', label: 'Max Files', type: 'integer', required: false, helpText: 'Maximum number of files to host. Size range: 1-125'},
+      {key: 'maxProConnections', label: 'Max Filemaker Pro Connections', type: 'integer', required: false, helpText: 'Maximum number of FileMaker Pro Advanced client connections'},
+      {key: 'maxPSOS', label: 'Max Perform Script on Servers', type: 'integer', required: false, helpText: 'Maximum simultaneous script sessions'}, ],
     sample: {
       id: 1,
       result: 0,
@@ -35,14 +53,14 @@ const options = {
 
 
 // List becomes a trigger: Tells zapier how to fetch a set of this resource
-const getServerConfigurationList = {
-  key: options.key,
+const poll = {
+  key: 'pollServerConfiguration',
   noun: options.noun,
   display: {
     label: 'Poll for Server Configuration Changes',
     description: 'Triggers when someone changes the server configuration', },
   operation: {
-    perform: options.operation.perform,
+    perform: options.operation.poll,
     sample: options.operation.sample,
     outputFields: options.operation.outputFields,
   },
@@ -51,21 +69,38 @@ const getServerConfigurationList = {
 
 // Create becomes an action: Tells zapier how to create a new instance of this resource
 // -- In this case, the action is to return a set of information, but I want it to show up as an action.
-const getServerConfigurationCreate = {
-  key: options.key,
+const get = {
+  key: 'getServerConfiguration',
   noun: options.noun,
   display: {
     label: 'Request the Configuration of Your Server',
     description: 'Returns the configuration of your server', },
   operation: {
-    perform: options.operation.perform,
+    perform: options.operation.get,
     sample: options.operation.sample,
     outputFields: options.operation.outputFields,
   },
 };
 
 
+// Create becomes an action: Tells zapier how to create a new instance of this resource
+const set = {
+  key: 'setServerConfiguration',
+  noun: options.noun,
+  display: {
+    label: 'Update Configuration of Server',
+    description: 'Send values to update your server configuration', },
+  operation: {
+    perform: options.operation.set,
+    inputFields: options.operation.inputFields,
+    sample: options.operation.sample,
+    outputFields: [ options.operation.outputFields[1], ],
+  },
+};
+
+
 module.exports = {
-  list: getServerConfigurationList,
-  create: getServerConfigurationCreate,
+  poll: poll,
+  get: get,
+  set: set,
 };

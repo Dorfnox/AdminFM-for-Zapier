@@ -22,12 +22,14 @@ const setServerStatus = (z, bundle) => {
 
 // options to be used in below definitions
 const options = {
-  key: 'getServerStatus',
+  key: 'ServerStatus',
   noun: 'Server Status',
   operation: {
-    perform: getServerStatus,
+    poll: getServerStatus,
+    get: getServerStatus,
+    set: setServerStatus,
     inputFields: [
-      {key: 'Running', type: 'boolean',  helpText: 'Set server to either \'true\' (Running) or \'false\' (Stopped)'} ],
+      {key: 'Running', type: 'boolean', helpText: 'Set server to either \'true\' (Running) or \'false\' (Stopped)'} ],
     sample: {
       id: 1,
       result: 0,
@@ -35,20 +37,20 @@ const options = {
     outputFields: [
       {key: 'id', label: 'ID'},
       {key: 'result', label: 'Filemaker Numeric Result'},
-      {key: 'running', label: 'Running'} ],
+      {key: 'running', label: 'Running'}, ],
     }
 };
 
 
 // List becomes a trigger: Tells zapier how to fetch a set of this resource
-const getServerStatusList = {
-  key: options.key,
+const poll = {
+  key: 'pollServerStatus',
   noun: options.noun,
   display: {
     label: 'Poll for Server Status Changes',
     description: 'Triggers when the status of your server changes', },
   operation: {
-    perform: options.operation.perform,
+    perform: options.operation.poll,
     sample: options.operation.sample,
     outputFields: options.operation.outputFields,
   },
@@ -57,14 +59,14 @@ const getServerStatusList = {
 
 // Create becomes an action: Tells zapier how to create a new instance of this resource
 // -- In this case, the action is to return a set of information, but I want it to show up as an action.
-const getServerStatusCreate = {
-  key: options.key,
+const get = {
+  key: 'getServerStatus',
   noun: options.noun,
   display: {
     label: 'Request the Status of Your Server',
     description: 'Returns the status of your server', },
   operation: {
-    perform: options.operation.perform,
+    perform: options.operation.get,
     sample: options.operation.sample,
     outputFields: options.operation.outputFields,
   },
@@ -72,23 +74,25 @@ const getServerStatusCreate = {
 
 
 // Create becomes an action: Tells zapier how to create a new instance of this resource
-const setServerStatusCreate = {
-  key: options.key,
+const set = {
+  key: 'setServerStatus',
   noun: options.noun,
   display: {
     label: 'Set Server Status',
     description: 'Turn the server on or off', },
   operation: {
-    perform: options.operation.perform,
+    perform: options.operation.set,
     inputFields: options.operation.inputFields, // Create requires an input field
     sample: options.operation.sample,
-    outputFields: options.operation.outputFields,
+    outputFields: [
+      options.operation.outputFields[0],
+      options.operation.outputFields[1], ],
   },
 };
 
 
 module.exports = {
-  list: getServerStatusList,
-  get: getServerStatusCreate,
-  set: setServerStatusCreate,
+  poll: poll,
+  get: get,
+  set: set,
 };

@@ -4,11 +4,16 @@ const authentication = require('./authentication');
 const ServerStatus = require('./resources/database_server_status');
 const ServerConfiguration = require('./resources/database_server_configuration');
 const ServerSecurityConfiguration = require('./resources/database_server_security_configuration');
+const Database = require('./resources/database.js');
+
+
 
 // JUST FOR TESTING
 // THIS MUST CHANGE IT IS HIGHLY UNSERCURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // CHANGE CHANGE CHANGE CHANGE CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 
 const includeSessionKeyHeader = (request, z, bundle) => {
   if (bundle.authData.sessionKey) {
@@ -52,17 +57,31 @@ const App = {
 
   // Will be polled for changes every 15 minutes; any changes to these activate the 'trigger'
   triggers: {
-    [ServerStatus.list.key]: ServerStatus.list,
-    [ServerConfiguration.list.key]: ServerConfiguration.list,
-    [ServerSecurityConfiguration.list.key]: ServerSecurityConfiguration.list,
+    [ServerStatus.poll.key]: ServerStatus.poll,
+
+    [ServerConfiguration.poll.key]: ServerConfiguration.poll,
+
+    [ServerSecurityConfiguration.poll.key]: ServerSecurityConfiguration.poll,
+
   },
 
   // Creates new instance of resource, applies an action to the server, or can be used to return a set of information as its 'action'
   creates: {
     [ServerStatus.get.key]: ServerStatus.get,
+
     [ServerStatus.set.key]: ServerStatus.set,
-    [ServerConfiguration.create.key]: ServerConfiguration.create,
-    [ServerSecurityConfiguration.create.key]: ServerSecurityConfiguration.create,
+
+    [ServerConfiguration.get.key]: ServerConfiguration.get,
+
+    [ServerConfiguration.set.key]: ServerConfiguration.set,
+
+    [ServerSecurityConfiguration.get.key]: ServerSecurityConfiguration.get,
+
+    [ServerSecurityConfiguration.set.key]: ServerSecurityConfiguration.set,
+
+    [Database.close.key]: Database.close,
+
+    [Database.list.key]: Database.list,
   }
 }
 
