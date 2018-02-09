@@ -1,9 +1,9 @@
 const authentication = require('./authentication');
 
 // Filemaker API integrations are stored in ./resources
-const ServerStatus = require('./resources/database_server_get_server_status');
-const ServerConfiguration = require('./resources/database_server_get_server_configuration');
-const ServerSecurityConfiguration = require('./resources/database_server_get_server_security_configuration');
+const ServerStatus = require('./resources/database_server_status');
+const ServerConfiguration = require('./resources/database_server_configuration');
+const ServerSecurityConfiguration = require('./resources/database_server_security_configuration');
 
 // JUST FOR TESTING
 // THIS MUST CHANGE IT IS HIGHLY UNSERCURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -48,20 +48,21 @@ const App = {
 
   // Requests for information from the server
   searches: {
-    [ServerStatus.search.key]: ServerStatus.search,
-    [ServerConfiguration.search.key]: ServerConfiguration.search,
-    [ServerSecurityConfiguration.search.key]: ServerSecurityConfiguration.search,
   },
 
   // Will be polled for changes every 15 minutes; any changes to these activate the 'trigger'
   triggers: {
-    [ServerStatus.trigger.key]: ServerStatus.trigger,
-    [ServerConfiguration.trigger.key]: ServerConfiguration.trigger,
-    [ServerSecurityConfiguration.trigger.key]: ServerSecurityConfiguration.trigger,
+    [ServerStatus.list.key]: ServerStatus.list,
+    [ServerConfiguration.list.key]: ServerConfiguration.list,
+    [ServerSecurityConfiguration.list.key]: ServerSecurityConfiguration.list,
   },
 
-  //
+  // Creates new instance of resource, applies an action to the server, or can be used to return a set of information as its 'action'
   creates: {
+    [ServerStatus.get.key]: ServerStatus.get,
+    [ServerStatus.set.key]: ServerStatus.set,
+    [ServerConfiguration.create.key]: ServerConfiguration.create,
+    [ServerSecurityConfiguration.create.key]: ServerSecurityConfiguration.create,
   }
 }
 

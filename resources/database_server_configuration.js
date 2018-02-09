@@ -1,19 +1,18 @@
 // Database Server - Get the Configuration of the server
-
 const getServerConfiguration = (z, bundle) => {
   const options = {
-    url: `${bundle.authData.server_address}/fmi/admin/api/v1/server/config/general`
+    url: `${bundle.authData.server_address}/fmi/admin/api/v1/server/config/general`,
+    method: 'GET',
   };
   return z.request(options)
     .then((response) => JSON.parse(response.content));
 };
 
+
 const options = {
   key: 'getServerConfiguration',
   noun: 'Server Configuration',
   operation: {
-    inputFields: [
-      {key: 'Empty', type: 'text',  helpText: 'Please leave this empty'} ],
     perform: getServerConfiguration,
     sample: {
       id: 1,
@@ -33,7 +32,9 @@ const options = {
     }
 };
 
-const getServerConfigurationTrigger = {
+
+// List becomes a trigger: Tells zapier how to fetch a set of this resource
+const getServerConfigurationList = {
   key: options.key,
   noun: options.noun,
   display: {
@@ -46,7 +47,10 @@ const getServerConfigurationTrigger = {
   },
 };
 
-const getServerConfigurationSearch = {
+
+// Create becomes an action: Tells zapier how to create a new instance of this resource
+// -- In this case, the action is to return a set of information, but I want it to show up as an action.
+const getServerConfigurationCreate = {
   key: options.key,
   noun: options.noun,
   display: {
@@ -54,13 +58,13 @@ const getServerConfigurationSearch = {
     description: 'Returns the configuration of your server', },
   operation: {
     perform: options.operation.perform,
-    inputFields: options.operation.inputFields,
     sample: options.operation.sample,
     outputFields: options.operation.outputFields,
   },
 };
 
+
 module.exports = {
-  trigger: getServerConfigurationTrigger,
-  search: getServerConfigurationSearch,
+  list: getServerConfigurationList,
+  create: getServerConfigurationCreate,
 };
