@@ -1,8 +1,27 @@
 // Database - close a database
 // NEEEEDDDDDDDSSSSSSSS TESTTTTTINNGGGGGG
 const closeDatabase = (z, bundle) => {
+  const options = {
+    url: `${bundle.authData.server_address}/fmi/admin/api/v1/databases/${bundle.inputData.dbid}/close`,
+    method: 'PUT',
+  };
+
   if (typeof bundle.inputData.message != 'undefined') {
     z.request.headers['Content-Length'] = bundle.inputData.message.length;
+    options['body'] = { message: bundle.inputData.message };
+  } else {
+    z.request.headers['Content-Length'] = 0;
+  };
+
+  return z.request(options)
+    .then((response) => JSON.parse(response.content));
+};
+
+
+// Database - Open a database
+const openDatabase = (z, bundle) => {
+  if (typeof bundle.inputData.key != 'undefined') {
+    z.request.headers['Content-Length'] = bundle.inputData.key.length;
   } else {
     z.request.headers['Content-Length'] = 0;
   };
@@ -10,6 +29,9 @@ const closeDatabase = (z, bundle) => {
   const options = {
     url: `${bundle.authData.server_address}/fmi/admin/api/v1/databases/${bundle.inputData.dbid}/close`,
     method: 'PUT',
+    body: {
+      key: bundle.inputData.key,
+    }
   };
 
   return z.request(options)
@@ -31,9 +53,10 @@ const listDatabases = (z, bundle) => {
 // options to be used in below definitions
 const options = {
   key: 'closeDatabase',
-  noun: 'Close Database',
+  noun: 'Database',
   operation: {
     close: closeDatabase,
+    open: openDatabase,
     list: listDatabases,
     inputFields: [
       {key: 'dbid', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
@@ -59,6 +82,24 @@ const close = {
   operation: {
     perform: options.operation.close,
     inputFields: options.operation.inputFields, // Create requires an input field
+    sample: options.operation.sample,
+    outputFields: [ options.operation.outputFields[1] ],
+  },
+};
+
+
+// Create becomes an action: Tells zapier how to create a new instance of this resource
+const open = {
+  key: 'openDatabase',
+  noun: options.noun,
+  display: {
+    label: 'Open Database Solution',
+    description: 'Open a database, given the Database ID', },
+  operation: {
+    perform: options.operation.open,
+    inputFields: [
+      {key: 'dbid', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
+      {key: 'key', type: 'string', required: false, helpText: 'Password for the Database File to open'}, ],
     sample: options.operation.sample,
     outputFields: [ options.operation.outputFields[1] ],
   },
@@ -148,5 +189,6 @@ const list = {
 
 module.exports = {
   close: close,
+  open: open,
   list: list,
 };

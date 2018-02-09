@@ -82,6 +82,8 @@ const App = {
     [Database.close.key]: Database.close,
 
     [Database.list.key]: Database.list,
+
+    [Database.open.key]: Database.open,
   }
 }
 
