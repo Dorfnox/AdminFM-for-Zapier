@@ -9,6 +9,7 @@ const getServerConfiguration = (z, bundle) => {
 };
 
 
+// options to be used in below definitions
 const options = {
   key: 'getServerConfiguration',
   noun: 'Server Configuration',

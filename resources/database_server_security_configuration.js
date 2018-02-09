@@ -1,5 +1,4 @@
 // Database Server - Get the Security Configuration of the server
-
 const getServerSecurityConfiguration = (z, bundle) => {
   const options = {
     url: `${bundle.authData.server_address}/fmi/admin/api/v1/server/config/security`,
@@ -9,6 +8,8 @@ const getServerSecurityConfiguration = (z, bundle) => {
     .then((response) => JSON.parse(response.content));
 };
 
+
+// options to be used in below definitions
 const options = {
   key: 'getServerSecurityConfiguration',
   noun: 'Server Security Configuration',
@@ -26,6 +27,7 @@ const options = {
     }
 };
 
+
 // List becomes a trigger: Tells zapier how to fetch a set of this resource
 const getServerSecurityConfigurationList = {
   key: options.key,
@@ -39,6 +41,7 @@ const getServerSecurityConfigurationList = {
     outputFields: options.operation.outputFields,
   },
 };
+
 
 // Create becomes an action: Tells zapier how to create a new instance of this resource
 // -- In this case, the action is to return a set of information, but I want it to show up as an action.
@@ -54,6 +57,7 @@ const getServerSecurityConfigurationCreate = {
     outputFields: options.operation.outputFields,
   },
 };
+
 
 module.exports = {
   list: getServerSecurityConfigurationList,

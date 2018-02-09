@@ -20,6 +20,7 @@ const setServerStatus = (z, bundle) => {
 };
 
 
+// options to be used in below definitions
 const options = {
   key: 'getServerStatus',
   noun: 'Server Status',
@@ -79,11 +80,12 @@ const setServerStatusCreate = {
     description: 'Turn the server on or off', },
   operation: {
     perform: options.operation.perform,
-    inputFields: options.operation.inputFields,
+    inputFields: options.operation.inputFields, // Create requires an input field
     sample: options.operation.sample,
     outputFields: options.operation.outputFields,
   },
 };
+
 
 module.exports = {
   list: getServerStatusList,
