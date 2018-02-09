@@ -59,8 +59,8 @@ const options = {
     open: openDatabase,
     list: listDatabases,
     inputFields: [
-      {key: 'dbid', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
-      {key: 'message', type: 'string', required: false, helpText: 'Text to send to clients being disconnected -> size range: 0-200'}, ],
+      {key: 'dbid', label: 'Database ID', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
+      {key: 'message', label: 'Message to Clients', type: 'string', required: false, helpText: 'Text to send to clients being disconnected -> size range: 0-200'}, ],
     sample: {
       id: 1,
       result: 0,
@@ -98,8 +98,8 @@ const open = {
   operation: {
     perform: options.operation.open,
     inputFields: [
-      {key: 'dbid', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
-      {key: 'key', type: 'string', required: false, helpText: 'Password for the Database File to open'}, ],
+      {key: 'dbid', label: 'Database ID', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
+      {key: 'key', label: 'Database File Password', type: 'string', required: false, helpText: 'Password for the Database File to open'}, ],
     sample: options.operation.sample,
     outputFields: [ options.operation.outputFields[1] ],
   },

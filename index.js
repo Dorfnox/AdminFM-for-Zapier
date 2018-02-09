@@ -5,6 +5,7 @@ const ServerStatus = require('./resources/database_server_status');
 const ServerConfiguration = require('./resources/database_server_configuration');
 const ServerSecurityConfiguration = require('./resources/database_server_security_configuration');
 const Database = require('./resources/database.js');
+const Schedules = require('./resources/schedules.js');
 
 
 
@@ -84,6 +85,9 @@ const App = {
     [Database.list.key]: Database.list,
 
     [Database.open.key]: Database.open,
+
+    [Schedules.create.key]: Schedules.create,
+
   }
 }
 

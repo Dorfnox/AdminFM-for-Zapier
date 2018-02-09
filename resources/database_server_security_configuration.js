@@ -29,7 +29,7 @@ const options = {
     get: getServerSecurityConfiguration,
     set: setServerSecurityConfiguration,
     inputFields: [
-      {key: 'requireSecureDB', type: 'boolean', required: true, helpText: 'Set whether or not the server hosts password-protected databases only'}, ],
+      {key: 'requireSecureDB', label: 'Set Server to Host PW-Protected Files', type: 'boolean', required: true, helpText: 'Set whether or not the server hosts password-protected databases only'}, ],
     sample: {
       id: 1,
       result: 0,

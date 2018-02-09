@@ -29,7 +29,7 @@ const options = {
     get: getServerStatus,
     set: setServerStatus,
     inputFields: [
-      {key: 'Running', type: 'boolean', helpText: 'Set server to either \'true\' (Running) or \'false\' (Stopped)'} ],
+      {key: 'running', label: 'Running', type: 'boolean', helpText: 'Set server to either \'true\' (Running) or \'false\' (Stopped)'} ],
     sample: {
       id: 1,
       result: 0,
