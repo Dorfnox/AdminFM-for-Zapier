@@ -48,12 +48,13 @@ const App = {
   // Requests for information from the server
   searches: {
     [ServerStatus.search.key]: ServerStatus.search,
+    [ServerConfiguration.search.key]: ServerConfiguration.search,
   },
 
-  // Will be polled for changes, any changes to these activate the 'trigger'
+  // Will be polled for changes every 15 minutes; any changes to these activate the 'trigger'
   triggers: {
     [ServerStatus.trigger.key]: ServerStatus.trigger,
-    [ServerConfiguration.key]: ServerConfiguration,
+    [ServerConfiguration.trigger.key]: ServerConfiguration.trigger,
   },
 
   //

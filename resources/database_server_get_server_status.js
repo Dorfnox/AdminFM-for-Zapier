@@ -1,4 +1,4 @@
-// Database Server - Get the status of the server (online or offline)
+// Database Server - Get the Status of the server (online or offline)
 
 const getServerStatus = (z, bundle) => {
   const options = {
@@ -13,7 +13,7 @@ const options = {
   noun: 'Server Status',
   operation: {
     inputFields: [
-      {key: 'Empty', type: 'text',  helpText: 'Testing where this shows up'} ],
+      {key: 'Empty', type: 'text',  helpText: 'Please leave this empty'} ],
     perform: getServerStatus,
     sample: {
       id: 1,
@@ -21,7 +21,7 @@ const options = {
       running: 'true' },
     outputFields: [
       {key: 'id', label: 'ID'},
-      {key: 'result', label: 'Filemaker Result'},
+      {key: 'result', label: 'Filemaker Numeric Result'},
       {key: 'running', label: 'Running'} ],
     }
 };
@@ -31,18 +31,27 @@ const getServerStatusTrigger = {
   noun: options.noun,
   display: {
     label: 'Poll for Server Status Changes',
-    description: 'Triggers when the status of your server changes' },
-  operation: options.operation,
-}
+    description: 'Triggers when the status of your server changes', },
+  operation: {
+    perform: options.operation.perform,
+    sample: options.operation.sample,
+    outputFields: options.operation.outputFields,
+  },
+};
 
 const getServerStatusSearch = {
   key: options.key,
   noun: options.noun,
   display: {
     label: 'Request the Status of Your Server',
-    description: 'Returns the status of your server' },
-  operation: options.operation,
-}
+    description: 'Returns the status of your server', },
+  operation: {
+    perform: options.operation.perform,
+    inputFields: options.operation.inputFields,
+    sample: options.operation.sample,
+    outputFields: options.operation.outputFields,
+  },
+};
 
 module.exports = {
   trigger: getServerStatusTrigger,
