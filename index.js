@@ -1,6 +1,7 @@
+// Filemaker API integrations are stored in ./resources
+
 const authentication = require('./authentication');
 
-// Filemaker API integrations are stored in ./resources
 const ServerStatus = require('./resources/database_server_status');
 
 const ServerConfiguration = require('./resources/database_server_configuration');
@@ -13,7 +14,7 @@ const BackupSchedule = require('./resources/schedule_backup.js');
 
 const FilemakerScriptSchedule = require('./resources/schedule_filemaker_script.js');
 
-
+const PHPTechnology = require('./resources/php_technology.js');
 
 // JUST FOR TESTING
 // THIS MUST CHANGE IT IS HIGHLY UNSERCURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -64,6 +65,7 @@ const App = {
 
   // Will be polled for changes every 15 minutes; any changes to these activate the 'trigger'
   triggers: {
+
     [ServerStatus.poll.key]: ServerStatus.poll,
 
     [ServerConfiguration.poll.key]: ServerConfiguration.poll,
@@ -74,6 +76,7 @@ const App = {
 
   // Creates new instance of resource, applies an action to the server, or can be used to return a set of information as its 'action'
   creates: {
+
     [ServerStatus.get.key]: ServerStatus.get,
 
     [ServerStatus.set.key]: ServerStatus.set,
@@ -94,7 +97,9 @@ const App = {
 
     [BackupSchedule.create.key]: BackupSchedule.create,
 
-    [FilemakerScriptSchedule.create.key]: FilemakerScriptSchedule.create
+    [FilemakerScriptSchedule.create.key]: FilemakerScriptSchedule.create,
+
+    [PHPTechnology.configure.key]: PHPTechnology.configure,
 
   }
 }
