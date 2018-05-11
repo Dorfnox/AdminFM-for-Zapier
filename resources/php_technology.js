@@ -4,7 +4,11 @@ const configPHPTechnology = (z, bundle) => {
     url: `${bundle.authData.server_address}/fmi/admin/api/v1/php/config`,
     method: 'PATCH',
     body: {
-
+      'enabled': bundle.inputData.enabled,
+      'useFilemakerPhp': bundle.inputData.useFilemakerPhp,
+      'characterEncoding': bundle.inputData.characterEncoding,
+      'dataPreValidation': bundle.inputData.dataPreValidation,
+      'errorMessageLanguage': bundle.inputData.errorMessageLanguage,
     },
   };
   return z.request(options)
@@ -37,6 +41,37 @@ const configure = {
   },
 };
 
+const get = {
+  key: 'getPHPTechnology',
+  noun: 'Get PHP Technology Configuration',
+  display: {
+    label: 'Get the PHP Technology Configuration of the Server',
+    description: 'Call when you want to get the PHP Technology settings', },
+  operation: {
+    perform: getPHPTechnology,
+    inputFields: [],
+    sample: {
+      "id": 1,
+      "result": 0,
+      "characterEncoding": "UTF-8",
+      "dataPreValidation": false,
+      "enabled": true,
+      "errorMessageLanguage": "en",
+      "useFileMakerPhp": true,
+    },
+    outputFields: [
+      {key: 'id', label: 'ID'},
+      {key: 'result', label: 'Filemaker Numeric Result'},
+      {key: 'enabled', label: 'Enable Custom Web Publishing'},
+      {key: 'useFileMakerPhp', label: 'Use Filemaker Server PHP'},
+      {key: 'characterEncoding', label: 'Set Character Encoding'},
+      {key: 'dataPreValidation', label: 'Validate Data on Web Server before committing'},
+      {key: 'errorMessageLanguage', label: 'Error Message Language'},
+    ],
+  },
+};
+
 module.exports = {
   configure: configure,
+  get: get,
 };
