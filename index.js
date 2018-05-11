@@ -101,6 +101,8 @@ const App = {
 
     [PHPTechnology.configure.key]: PHPTechnology.configure,
 
+    [PHPTechnology.get.key]: PHPTechnology.get,
+
   }
 }
 

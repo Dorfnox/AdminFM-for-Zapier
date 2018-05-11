@@ -15,6 +15,15 @@ const configPHPTechnology = (z, bundle) => {
     .then((response) => JSON.parse(response.content));
 };
 
+const getPHPTechnology = (z, bundle) => {
+  const options = {
+    url: `${bundle.authData.server_address}/fmi/admin/api/v1/php/config`,
+    method: 'GET',
+  };
+  return z.request(options)
+    .then((response) => JSON.parse(response.content));
+};
+
 const configure = {
   key: 'configurePHPTechnology',
   noun: 'Configure PHP',
