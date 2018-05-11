@@ -79,7 +79,7 @@ const set = {
   noun: options.noun,
   display: {
     label: 'Set Server Status',
-    description: 'Turn the server on or off', },
+    description: 'Turn the server on or off' },
   operation: {
     perform: options.operation.set,
     inputFields: options.operation.inputFields, // Create requires an input field

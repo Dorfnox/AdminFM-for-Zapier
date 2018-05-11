@@ -2,13 +2,13 @@
 // NEEEEDDDDDDDSSSSSSSS TESTTTTTINNGGGGGG
 const closeDatabase = (z, bundle) => {
   const options = {
-    url: `${bundle.authData.server_address}/fmi/admin/api/v1/databases/${bundle.inputData.dbid}/close`,
+    url: `${bundle.authData.server_address}/fmi/admin/api/v1/databases/${bundle.inputData.db_i_d}/close`,
     method: 'PUT',
   };
 
   if (typeof bundle.inputData.message != 'undefined') {
     z.request.headers['Content-Length'] = bundle.inputData.message.length;
-    options['body'] = { message: bundle.inputData.message };
+    options['body'] = { message: bundle.inputData };
   } else {
     z.request.headers['Content-Length'] = 0;
   };
@@ -27,7 +27,7 @@ const openDatabase = (z, bundle) => {
   };
 
   const options = {
-    url: `${bundle.authData.server_address}/fmi/admin/api/v1/databases/${bundle.inputData.dbid}/close`,
+    url: `${bundle.authData.server_address}/fmi/admin/api/v1/databases/${bundle.inputData.db_i_d}/open`,
     method: 'PUT',
     body: {
       key: bundle.inputData.key,
@@ -52,14 +52,14 @@ const listDatabases = (z, bundle) => {
 
 // options to be used in below definitions
 const options = {
-  key: 'closeDatabase',
+  key: null,
   noun: 'Database',
   operation: {
     close: closeDatabase,
     open: openDatabase,
     list: listDatabases,
     inputFields: [
-      {key: 'dbid', label: 'Database ID', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
+      {key: 'db_i_d', label: 'Database ID', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
       {key: 'message', label: 'Message to Clients', type: 'string', required: false, helpText: 'Text to send to clients being disconnected -> size range: 0-200'}, ],
     sample: {
       id: 1,
@@ -83,7 +83,7 @@ const close = {
     perform: options.operation.close,
     inputFields: options.operation.inputFields, // Create requires an input field
     sample: options.operation.sample,
-    outputFields: [ options.operation.outputFields[1] ],
+    outputFields: options.operation.outputFields
   },
 };
 
@@ -98,10 +98,10 @@ const open = {
   operation: {
     perform: options.operation.open,
     inputFields: [
-      {key: 'dbid', label: 'Database ID', type: 'string', required: true, helpText: 'Database ID of the database to disconnect'},
-      {key: 'key', label: 'Database File Password', type: 'string', required: false, helpText: 'Password for the Database File to open'}, ],
+      {key: 'db_i_d', label: 'Database ID', type: 'string', required: true, helpText: 'Database ID of the database to open'},
+      {key: 'key', label: 'Database File Password', type: 'string', required: false, helpText: 'Password for the Database File to open, if needed'}, ],
     sample: options.operation.sample,
-    outputFields: [ options.operation.outputFields[1] ],
+    outputFields: options.operation.outputFields
   },
 };
 

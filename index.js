@@ -2,10 +2,16 @@ const authentication = require('./authentication');
 
 // Filemaker API integrations are stored in ./resources
 const ServerStatus = require('./resources/database_server_status');
+
 const ServerConfiguration = require('./resources/database_server_configuration');
+
 const ServerSecurityConfiguration = require('./resources/database_server_security_configuration');
+
 const Database = require('./resources/database.js');
-const Schedules = require('./resources/schedules.js');
+
+const BackupSchedule = require('./resources/schedule_backup.js');
+
+const FilemakerScriptSchedule = require('./resources/schedule_filemaker_script.js');
 
 
 
@@ -13,7 +19,6 @@ const Schedules = require('./resources/schedules.js');
 // THIS MUST CHANGE IT IS HIGHLY UNSERCURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // CHANGE CHANGE CHANGE CHANGE CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
 
 const includeSessionKeyHeader = (request, z, bundle) => {
@@ -36,6 +41,7 @@ const sessionRefreshIf401 = (response, z, bundle) => {
 };
 
 const App = {
+
   version: require('./package.json').version,
   platformVersion: require('zapier-platform-core').version,
 
@@ -62,7 +68,7 @@ const App = {
 
     [ServerConfiguration.poll.key]: ServerConfiguration.poll,
 
-    [ServerSecurityConfiguration.poll.key]: ServerSecurityConfiguration.poll,
+    [ServerSecurityConfiguration.poll.key]: ServerSecurityConfiguration.poll
 
   },
 
@@ -86,7 +92,9 @@ const App = {
 
     [Database.open.key]: Database.open,
 
-    [Schedules.create.key]: Schedules.create,
+    [BackupSchedule.create.key]: BackupSchedule.create,
+
+    [FilemakerScriptSchedule.create.key]: FilemakerScriptSchedule.create
 
   }
 }
