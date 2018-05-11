@@ -14,6 +14,8 @@ const BackupSchedule = require('./resources/schedule_backup.js');
 
 const FilemakerScriptSchedule = require('./resources/schedule_filemaker_script.js');
 
+const MessageSchedule = require('./resources/schedule_message.js');
+
 const PHPTechnology = require('./resources/php_technology.js');
 
 // JUST FOR TESTING
@@ -98,6 +100,8 @@ const App = {
     [BackupSchedule.create.key]: BackupSchedule.create,
 
     [FilemakerScriptSchedule.create.key]: FilemakerScriptSchedule.create,
+
+    [MessageSchedule.create.key]: MessageSchedule.create,
 
     [PHPTechnology.configure.key]: PHPTechnology.configure,
 

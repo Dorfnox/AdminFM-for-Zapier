@@ -1,4 +1,4 @@
-// Configure the PHP technology
+// Configure the PHP Technology
 const configPHPTechnology = (z, bundle) => {
   const options = {
     url: `${bundle.authData.server_address}/fmi/admin/api/v1/php/config`,
@@ -15,6 +15,7 @@ const configPHPTechnology = (z, bundle) => {
     .then((response) => JSON.parse(response.content));
 };
 
+// Get the currently configured settings for the server's PHP Technology
 const getPHPTechnology = (z, bundle) => {
   const options = {
     url: `${bundle.authData.server_address}/fmi/admin/api/v1/php/config`,
@@ -39,7 +40,7 @@ const configure = {
       {key: 'dataPreValidation', label: 'Validate Data on Web Server before committing', type: 'boolean', required: false, helpText: 'Enables or disables validation of record data on the web server before sending it to the database for commit.'},
       {key: 'errorMessageLanguage', label: 'Error Message Language', type: 'string', required: false, helpText: 'Sets the language used for error messages in PHP. Allowed values: "en", "it", "de", "fr", "ja", "sv"'},
     ],
-    sample: { // Hard-coded sample
+    sample: { // Hard-coded sample or response
       id: 1,
       result: 0,
     },
