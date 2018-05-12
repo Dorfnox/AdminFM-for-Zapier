@@ -10,6 +10,8 @@ const ServerSecurityConfiguration = require('./resources/database_server_securit
 
 const Database = require('./resources/database.js');
 
+const Schedule = require('./resources/schedule_get_list_run.js');
+
 const BackupSchedule = require('./resources/schedule_backup.js');
 
 const FilemakerScriptSchedule = require('./resources/schedule_filemaker_script.js');
@@ -96,6 +98,12 @@ const App = {
     [Database.list.key]: Database.list,
 
     [Database.open.key]: Database.open,
+
+    [Schedule.get.key]: Schedule.get,
+
+    [Schedule.list.key]: Schedule.list,
+
+    [Schedule.run.key]: Schedule.run,
 
     [BackupSchedule.create.key]: BackupSchedule.create,
 

@@ -35,7 +35,6 @@ const createMessageSchedule = (z, bundle) => {
 };
 
 
-// options to be used in below definitions
 const create = {
   key: 'createMessageSchedule',
   noun: 'Create Message Schedule',
