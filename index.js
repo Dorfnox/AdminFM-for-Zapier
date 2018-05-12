@@ -20,6 +20,8 @@ const MessageSchedule = require('./resources/schedule_message.js');
 
 const PHPTechnology = require('./resources/php_technology.js');
 
+const XMLTechnology = require('./resources/xml_technology.js');
+
 // JUST FOR TESTING
 // THIS MUST CHANGE IT IS HIGHLY UNSERCURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -114,6 +116,10 @@ const App = {
     [PHPTechnology.configure.key]: PHPTechnology.configure,
 
     [PHPTechnology.get.key]: PHPTechnology.get,
+
+    [XMLTechnology.configure.key]: XMLTechnology.configure,
+
+    [XMLTechnology.get.key]: XMLTechnology.get,
 
   }
 }
