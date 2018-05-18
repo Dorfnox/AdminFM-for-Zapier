@@ -113,7 +113,8 @@ const list = {
   noun: options.noun,
   display: {
     label: 'List Databases',
-    description: 'Returns a list of the Databases hosted on the server', },
+    description: 'Returns a list of the Databases hosted on the server',
+    important: true },
   operation: {
     perform: options.operation.list,
     sample: {
