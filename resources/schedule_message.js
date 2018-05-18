@@ -1,5 +1,22 @@
+const getCurrentTimestring = () => {
+  let now = new Date(new Date().getTime() + 1000 * 10);
+      year = now.getFullYear(),
+      month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1,
+      day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate(),
+      hours = now.getHours(),
+      minutes = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes(),
+      seconds = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds(),
+      dateString = `${year}-${month}-${day}`,
+      timeString = `${hours}-${minutes}-${seconds}`;
+
+    return `${dateString}-${timeString}`;
+};
+
 // Schedules - Create a Message Schedule
 const createMessageSchedule = (z, bundle) => {
+  let startDate = bundle.inputData.startDate.toLowerCase();
+  startDate = startDate == 'now' ? getCurrentTimestring : startDate;
+
   const options = {
     url: `${bundle.authData.server_address}/fmi/admin/api/v1/schedules`,
     method: 'POST',
@@ -7,7 +24,7 @@ const createMessageSchedule = (z, bundle) => {
       'taskType': 3,
       'name': bundle.inputData.name,
       'freqType': bundle.inputData.freqType,
-      'startDate': bundle.inputData.startDate,
+      'startDate': startDate,
       'target': bundle.inputData.target,
       'messageText': bundle.inputData.messageText,
 
@@ -47,7 +64,7 @@ const create = {
     inputFields: [
       {key: 'name', label: 'Schedule Name', type: 'string', required: true, helpText: 'Message Schedule name (1 - 31 chars)'},
       {key: 'freqType', label: 'Schedule Frequency', type: 'integer', required: true, helpText: '1=Daily, 2=Daily, or Every n Days, 3=Weekly'},
-      {key: 'startDate', label: 'Start Date', type: 'string', required: true, helpText: 'Year-Month-Day-Hour-Minute-Second in 24-hour format'},
+      {key: 'startDate', label: 'Start Date', type: 'string', required: true, helpText: 'Year-Month-Day-Hour-Minute-Second in 24-hour format. Or type in \'now\''},
       {key: 'target', label: 'Target Database Type', type: 'integer', required: true, helpText: 'Database type (2 - all databases, 3 - some databases under a subfolder, 4 - single database)'},
       {key: 'messageText', label: 'Message Content', type: 'string', required: true, helpText: 'Message content to be sent to FileMaker clients (1 to 200 characters)'},
 

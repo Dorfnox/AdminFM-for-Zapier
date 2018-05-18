@@ -1,3 +1,17 @@
+const getCurrentTimestring = () => {
+  let now = new Date(new Date().getTime() + 1000 * 10);
+      year = now.getFullYear(),
+      month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1,
+      day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate(),
+      hours = now.getHours(),
+      minutes = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes(),
+      seconds = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds(),
+      dateString = `${year}-${month}-${day}`,
+      timeString = `${hours}-${minutes}-${seconds}`;
+
+    return `${dateString}-${timeString}`;
+};
+
 // Schedules - get a single schedule
 const getSchedule = (z, bundle) => {
   const options = {

@@ -44,7 +44,7 @@ module.exports = {
   type: 'session',
 
   fields: [
-    {key: 'server_address', label: 'Filemaker Server Address', required: true, type: 'string', helpText: 'For example, https://fm007.mycompany.net'},
+    {key: 'server_address', label: 'Filemaker Server Address', required: true, type: 'string', helpText: 'For example, https://fm007.jamesbond.net'},
     {key: 'username', label: 'Username', required: true, type: 'string', helpText: 'An Admin username credential you use for the server'},
     {key: 'password', label: 'Password', required: true, type: 'password', helpText: 'An Admin password credential used with your username'},
   ],
