@@ -29,99 +29,101 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 
 const includeSessionKeyHeader = (request, z, bundle) => {
-  if (bundle.authData.sessionKey) {
-    request.headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${bundle.authData.sessionKey}`
-    };
-  };
-  return request;
+	if (bundle.authData.sessionKey) {
+		request.headers = {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${bundle.authData.sessionKey}`
+		};
+	};
+	return request;
 };
 
 const sessionRefreshIf401 = (response, z, bundle) => {
-  if (bundle.authData.sessionKey) {
-    if (response.status === 401) {
-      throw new z.errors.RefreshAuthError('Session key needs refreshing.');
-    }
-  }
-  return response;
+	if (bundle.authData.sessionKey) {
+		if (response.status === 401) {
+			throw new z.errors.RefreshAuthError('Session key needs refreshing.');
+		}
+	}
+	return response;
 };
 
 const App = {
 
-  version: require('./package.json').version,
-  platformVersion: require('zapier-platform-core').version,
+	version: require('./package.json').version,
+	platformVersion: require('zapier-platform-core').version,
 
-  authentication: authentication,
+	authentication: authentication,
 
-  beforeRequest: [
-    includeSessionKeyHeader
-  ],
+	beforeRequest: [
+		includeSessionKeyHeader
+	],
 
-  afterResponse: [
-    sessionRefreshIf401
-  ],
+	afterResponse: [
+		sessionRefreshIf401
+	],
 
-  resources: {
-  },
+	resources: {
+	},
 
-  // Requests for information from the server
-  searches: {
-  },
+	// Requests for information from the server
+	searches: {
+	},
 
-  // Will be polled for changes every 15 minutes; any changes to these activate the 'trigger'
-  triggers: {
+	// Will be polled for changes every 15 minutes; any changes to these activate the 'trigger'
+	triggers: {
 
-    [ServerStatus.poll.key]: ServerStatus.poll,
+		[ServerStatus.poll.key]: ServerStatus.poll,
 
-    [ServerConfiguration.poll.key]: ServerConfiguration.poll,
+		[ServerConfiguration.poll.key]: ServerConfiguration.poll,
 
-    [ServerSecurityConfiguration.poll.key]: ServerSecurityConfiguration.poll
+		[ServerSecurityConfiguration.poll.key]: ServerSecurityConfiguration.poll
 
-  },
+	},
 
-  // Creates new instance of resource, applies an action to the server, or can be used to return a set of information as its 'action'
-  creates: {
+	// Creates new instance of resource, applies an action to the server, or can be used to return a set of information as its 'action'
+	creates: {
 
-    [ServerStatus.get.key]: ServerStatus.get,
+		[ServerStatus.get.key]: ServerStatus.get,
 
-    [ServerStatus.set.key]: ServerStatus.set,
+		[ServerStatus.set.key]: ServerStatus.set,
 
-    [ServerConfiguration.get.key]: ServerConfiguration.get,
+		[ServerConfiguration.get.key]: ServerConfiguration.get,
 
-    [ServerConfiguration.set.key]: ServerConfiguration.set,
+		[ServerConfiguration.set.key]: ServerConfiguration.set,
 
-    [ServerSecurityConfiguration.get.key]: ServerSecurityConfiguration.get,
+		[ServerSecurityConfiguration.get.key]: ServerSecurityConfiguration.get,
 
-    [ServerSecurityConfiguration.set.key]: ServerSecurityConfiguration.set,
+		[ServerSecurityConfiguration.set.key]: ServerSecurityConfiguration.set,
 
-    [Database.close.key]: Database.close,
+		[Database.close.key]: Database.close,
 
-    [Database.list.key]: Database.list,
+		[Database.list.key]: Database.list,
 
-    [Database.open.key]: Database.open,
+		[Database.open.key]: Database.open,
 
-    [Schedule.get.key]: Schedule.get,
+		[Schedule.get.key]: Schedule.get,
 
-    [Schedule.list.key]: Schedule.list,
+		[Schedule.list.key]: Schedule.list,
 
-    [Schedule.run.key]: Schedule.run,
+		[Schedule.run.key]: Schedule.run,
 
-    [BackupSchedule.create.key]: BackupSchedule.create,
+		[BackupSchedule.create.key]: BackupSchedule.create,
 
-    [FilemakerScriptSchedule.create.key]: FilemakerScriptSchedule.create,
+		[FilemakerScriptSchedule.create.key]: FilemakerScriptSchedule.create,
 
-    [MessageSchedule.create.key]: MessageSchedule.create,
+		[MessageSchedule.create.key]: MessageSchedule.create,
 
-    [PHPTechnology.configure.key]: PHPTechnology.configure,
+		[MessageSchedule.sendAll.key]: MessageSchedule.sendAll,
 
-    [PHPTechnology.get.key]: PHPTechnology.get,
+		[PHPTechnology.configure.key]: PHPTechnology.configure,
 
-    [XMLTechnology.configure.key]: XMLTechnology.configure,
+		[PHPTechnology.get.key]: PHPTechnology.get,
 
-    [XMLTechnology.get.key]: XMLTechnology.get,
+		[XMLTechnology.configure.key]: XMLTechnology.configure,
 
-  }
+		[XMLTechnology.get.key]: XMLTechnology.get,
+
+	}
 }
 
 module.exports = App;
